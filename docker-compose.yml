@@ -12,6 +12,7 @@ services:
       - ./:/var/www
       - /var/www/vendor
       - /var/www/node_modules
+      - /var/www/public/build
     networks:
       - logbook_network
     environment:
