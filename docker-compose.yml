@@ -23,7 +23,7 @@ services:
       DB_USERNAME: ${DB_USERNAME:-root}
       DB_PASSWORD: ${DB_PASSWORD:-root}
 
-  # Nginx Web Server (Using Production-Ready Config)
+  # Nginx Web Server
   web:
     image: nginx:alpine
     container_name: logbook-web
@@ -36,7 +36,7 @@ services:
     networks:
       - logbook_network
 
-  # MySQL Database
+  # MySQL Database (Hanya digunakan jika DB_HOST=db)
   db:
     image: mysql:8.0
     container_name: logbook-db
