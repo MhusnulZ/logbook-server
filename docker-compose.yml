@@ -1,5 +1,5 @@
 services:
-  # PHP Application (Unified Local & Production)
+  # PHP Application
   app:
     build:
       context: .
@@ -12,7 +12,7 @@ services:
       - ./:/var/www
       - /var/www/vendor
       - /var/www/node_modules
-      - /var/www/public/build
+      - public_build:/var/www/public/build
     networks:
       - logbook_network
     environment:
@@ -34,10 +34,11 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - public_build:/var/www/public/build
     networks:
       - logbook_network
 
-  # MySQL Database (Hanya digunakan jika DB_HOST=db)
+  # MySQL Database
   db:
     image: mysql:8.0
     container_name: logbook-db
@@ -59,4 +60,6 @@ networks:
 
 volumes:
   logbook_db_data:
+    driver: local
+  public_build:     # Named volume untuk berbagi aset
     driver: local
