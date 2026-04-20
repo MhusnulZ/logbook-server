@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Book Digital Server Room</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <i data-lucide="layout-dashboard"></i>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" id="nav-dashboard" class="nav-item active">
+                    <i data-lucide="list"></i>
+                </a>
+                
+                <a href="#" id="nav-history" class="nav-item">
+                    <i data-lucide="history"></i>
+                </a>
+                
+            </nav>
+        </aside>
+
+        <!-- Main Viewport -->
+        <main class="main-viewport">
+            <header class="header">
+                <div class="header-title">
+                    <h1 id="page-title">Log Book Digital Server Room</h1>
+                    <p id="page-subtitle">Pencatatan Akses Keluar/Masuk Ruang Server BBHIPMM</p>
+                </div>
+                <div class="header-meta">
+                    <div class="datetime">
+                        <span id="current-date">-- --- ----</span> | 
+                        <span id="current-time">--.--</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view-container">
+                <div class="dashboard-content">
+                    <!-- Stats Row -->
+                    <div class="stats-grid">
+                        <div class="card stat-card">
+                            <span class="stat-label">Total Akses Hari Ini</span>
+                            <span class="stat-value" id="total-access">0</span>
+                        </div>
+                        <div class="card stat-card">
+                            <span class="stat-label">Personel di Dalam</span>
+                            <span class="stat-value" id="personnel-inside">00</span>
+                        </div>
+                        <div class="card stat-card">
+                            <span class="stat-label">Status Keamanan</span>
+                            <span class="stat-status success">
+                                <i data-lucide="shield-check"></i> Terjaga
+                            </span>
+                        </div>
+                        <div class="card stat-card">
+                            <span class="stat-label">Update Terakhir</span>
+                            <span class="stat-status" style="color:var(--text-main)">Sesuai Protokol</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Grid -->
+                    <div class="main-grid">
+                        <!-- Column 1: New Registration -->
+                        <section class="card">
+                            <div class="card-title">
+                                <i data-lucide="user-plus"></i>
+                                <h2>Pencatatan Baru</h2>
+                            </div>
+                            <form id="log-form">
+                                <div class="form-group-row">
+                                    <div class="form-group">
+                                        <label for="visitor-name">Nama Pengunjung</label>
+                                        <input type="text" id="visitor-name" class="input-field" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vendor-name">Nama Perusahaan / Vendor</label>
+                                        <input type="text" id="vendor-name" class="input-field" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group-row">
+                                    <div class="form-group">
+                                        <label for="purpose">Tujuan / Keperluan</label>
+                                        <select id="purpose" class="input-field" required>
+                                            <option value="" disabled selected>Pilih Keperluan</option>
+                                            <option value="Pemeliharaan Rutin">Pemeliharaan Rutin</option>
+                                            <option value="Perbaikan Darurat">Perbaikan Darurat</option>
+                                            <option value="Pemasangan Perangkat">Pemasangan Perangkat</option>
+                                            <option value="Audit Jaringan">Audit Jaringan</option>
+                                            <option value="Inspeksi Keamanan">Inspeksi Keamanan</option>
+                                            <option value="Pemantauan Kondisi Ruangan">Pemantauan Kondisi Ruangan</option>
+                                            <option value="Kunjungan Tamu">Kunjungan Tamu</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quantity">Jumlah Orang</label>
+                                        <div style="display:flex; gap:10px; align-items:center;">
+                                            <input type="number" id="quantity" class="input-field" style="width:80px" value="1" min="1">
+                                            <span style="color:var(--text-muted); font-size:14px;">Personel</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label class="checkbox-group">
+                                    <input type="checkbox" id="manual-time-toggle">
+                                    <span class="checkbox-label">Atur Waktu Secara Manual (Opsional)</span>
+                                </label>
+
+                                <!-- Manual Time Fields (Hidden by default) -->
+                                <div id="manual-time-fields" style="display: none; margin-bottom: 1.5rem;">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                                        <div class="form-group">
+                                            <label for="manual-date">TANGGAL</label>
+                                            <input type="date" id="manual-date" class="input-field">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="manual-time-in">JAM MASUK</label>
+                                            <input type="time" id="manual-time-in" class="input-field">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="manual-time-out">JAM KELUAR</label>
+                                            <input type="time" id="manual-time-out" class="input-field">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Deskripsi Kerja / Detail</label>
+                                    <textarea id="description" class="input-field" rows="4" placeholder="Detail pekerjaan..." required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn-primary" style="margin-top: 2rem;">
+                                    <i data-lucide="user-plus"></i> SIMPAN LOG MASUK
+                                </button>
+                            </form>
+                        </section>
+
+                        <!-- Column 2: Activity List -->
+                        <section class="card">
+                            <div class="card-title" style="justify-content: space-between;">
+                                <div style="display:flex; align-items:center; gap:0.75rem;">
+                                    <i data-lucide="history"></i>
+                                    <h2>Aktivitas Terakhir</h2>
+                                </div>
+                                <span style="font-size: 10px; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-weight:800;">LIVE SYNC</span>
+                            </div>
+                            <div id="activity-list" class="activity-list">
+                                <!-- JS will inject logs here -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History View -->
+            <div id="history-view" class="view-container" style="display: none;">
+                <div class="dashboard-content">
+                    <!-- Filter Bar -->
+                    <div class="card filter-bar">
+                        <div class="filter-group" style="flex: 2;">
+                            <div class="input-with-icon">
+                                <i data-lucide="search"></i>
+                                <input type="text" id="filter-search" class="input-field" placeholder="Cari nama atau perusahaan...">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="input-with-icon">
+                                <i data-lucide="filter"></i>
+                                <select id="filter-purpose" class="input-field">
+                                    <option value="">Semua Tujuan</option>
+                                    <option value="Pemeliharaan Rutin">Pemeliharaan Rutin</option>
+                                    <option value="Perbaikan Darurat">Perbaikan Darurat</option>
+                                    <option value="Pemasangan Perangkat">Pemasangan Perangkat</option>
+                                    <option value="Audit Jaringan">Audit Jaringan</option>
+                                    <option value="Kunjungan Tamu">Kunjungan Tamu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="input-with-icon">
+                                <i data-lucide="calendar"></i>
+                                <input type="date" id="filter-date" class="input-field">
+                            </div>
+                        </div>
+                        <button id="btn-reset-filter" class="btn-secondary">Reset Filter</button>
+                    </div>
+
+                    <!-- History Table -->
+                    <div class="card table-container" style="padding: 0; overflow: hidden;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>TANGGAL</th>
+                                    <th>NAMA & INSTANSI</th>
+                                    <th>QTY</th>
+                                    <th>TUJUAN & DESKRIPSI</th>
+                                    <th>MASUK</th>
+                                    <th>KELUAR</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <!-- JS items -->
+                            </tbody>
+                        </table>
+                        <div class="table-footer">
+                            <span id="history-count">Total: 0 Data ditemukan</span>
+                            <button id="btn-export-csv" class="btn-export">
+                                <i data-lucide="download"></i> Ekspor (CSV)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Application Script -->
+    <script src="src/js/app.js" type="module"></script>
+    <script>
+        // Initialize Lucide icons on load
+        window.addEventListener('load', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

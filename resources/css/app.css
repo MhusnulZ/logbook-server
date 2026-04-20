@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* Custom Theme Colors */
+    --color-primary-main: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-light: rgba(37, 99, 235, 0.1);
+    
+    /* Gradients */
+    --background-image-primary-gradient: linear-gradient(135deg, #2563eb, #3b82f6);
+    
+    /* Layout */
+    --spacing-sidebar: 80px;
+    --spacing-header: 70px;
+    
+    /* Radius */
+    --radius-premium: 0.75rem;
+}
+
+@utility glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+@utility btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-image: var(--background-image-primary-gradient);
+    color: white;
+    font-weight: 600;
+    width: 100%;
+    padding: 1rem;
+    border-radius: var(--radius-premium);
+    transition: transform 0.1s, opacity 0.2s;
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

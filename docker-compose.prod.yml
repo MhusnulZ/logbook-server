@@ -1,0 +1,59 @@
+
+
+services:
+  # PHP Application (Production)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: logbook-prod-app
+    container_name: logbook-prod-app
+    restart: always
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY}
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-logbook-server}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+    networks:
+      - logbook_prod_network
+
+  # Nginx Web Server (Production)
+  web:
+    image: nginx:alpine
+    container_name: logbook-prod-web
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/prod.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www
+    networks:
+      - logbook_prod_network
+
+  # MySQL Database (Production)
+  # Note: In a real production, you might use a managed DB service.
+  db:
+    image: mysql:8.0
+    container_name: logbook-prod-db
+    command: ["mysqld", "--skip-name-resolve"]
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-logbook-server}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    volumes:
+      - logbook_prod_db_data:/var/lib/mysql
+    networks:
+      - logbook_prod_network
+
+networks:
+  logbook_prod_network:
+    driver: bridge
+
+volumes:
+  logbook_prod_db_data:
+    driver: local
