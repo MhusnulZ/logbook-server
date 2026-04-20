@@ -368,7 +368,11 @@
                 if (manualToggle.checked) {
                     manualFields.classList.remove('hidden');
                     const now = new Date();
-                    document.getElementById('manual-date').value = now.toISOString().split('T')[0];
+                    // Gunakan format local date YYYY-MM-DD
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const day = String(now.getDate()).padStart(2, '0');
+                    document.getElementById('manual-date').value = `${year}-${month}-${day}`;
                     document.getElementById('manual-time-in').value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
                 } else {
                     manualFields.classList.add('hidden');
